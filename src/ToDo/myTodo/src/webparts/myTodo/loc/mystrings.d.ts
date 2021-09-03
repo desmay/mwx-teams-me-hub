@@ -11,6 +11,8 @@ declare interface IMyTodoWebPartStrings {
   Loading: string;
   RefreshInterval:string;
   ViewAllTodo:string;
+  HeaderDisplayPropertyLabel: string;
+  uiPropertyGroupName: string;
 }
 
 declare module 'MyTodoWebPartStrings' {

@@ -28,7 +28,16 @@
   .noMessages {
     @include ms-font-m;
   }  
+  .webPartTitle {
+    margin-bottom: 10px;    
+  }
 
+  .webPartTitleStandard {
+    span[role="heading"] {      
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
   // .todoLink{
   //   color: $ms-color-themePrimary;
   //   white-space: nowrap;

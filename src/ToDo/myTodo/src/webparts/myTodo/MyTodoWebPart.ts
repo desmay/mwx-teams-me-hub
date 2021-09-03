@@ -5,9 +5,11 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneDropdown
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+import { HeaderDisplay} from './enums';
 import * as strings from 'MyTodoWebPartStrings';
 import MyTodo from './components/MyTodo';
 import { IMyTodoProps } from './components/IMyTodoProps';
@@ -21,6 +23,7 @@ export interface IMyTodoWebPartProps {
   description: string;
   nrOfTasks: number;
   refreshInterval: number;
+  headerDisplay?: HeaderDisplay;
 }
 
 export default class MyTodoWebPart extends BaseClientSideWebPart<IMyTodoWebPartProps> {
@@ -45,6 +48,7 @@ export default class MyTodoWebPart extends BaseClientSideWebPart<IMyTodoWebPartP
         refreshInterval: this.properties.refreshInterval,
         nrOfTasks: this.properties.nrOfTasks,
         description: this.properties.description,
+        headerDisplay: this.properties.headerDisplay,
         graphClient: this.graphClient,
         displayMode: this.displayMode,
         updateProperty: (value: string): void => {
@@ -94,6 +98,40 @@ export default class MyTodoWebPart extends BaseClientSideWebPart<IMyTodoWebPartP
                   maxValue: 60
                 }),
               ]
+            },
+            {
+              groupName: strings.uiPropertyGroupName,
+              
+              groupFields: [                
+                PropertyPaneDropdown("headerDisplay", {
+                  label: strings.HeaderDisplayPropertyLabel,
+                  ariaLabel: strings.HeaderDisplayPropertyLabel,
+                  selectedKey: this.properties.headerDisplay,                  
+                  options: [
+                    {                      
+                      text:  HeaderDisplay.Standard,
+                      key: HeaderDisplay.Standard
+                    },
+                    {                      
+                      text: HeaderDisplay.Large,
+                      key: HeaderDisplay.Large
+                    },
+                    {                     
+                      text: HeaderDisplay.None,
+                      key: HeaderDisplay.None
+                    }
+                  ]
+                })/*,
+                PropertyPaneToggle("enableThemes", {
+                  label: strings.EnableThemesPropertyLabel,
+                  key: "enableThemes",
+                  onText: strings.EnableOnPropertyText,
+                  onAriaLabel: strings.EnableOnPropertyText,
+                  offText: strings.EnableOffPropertyText,
+                  offAriaLabel: strings.EnableOffPropertyText,
+                  checked: this.properties.enableThemes
+                })*/
+              ],
             }
           ]
         }

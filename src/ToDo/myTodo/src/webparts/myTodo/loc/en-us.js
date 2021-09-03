@@ -9,6 +9,8 @@ define([], function() {
     "NoMessages": "No tasks were found",
     "Loading": "Retrieving your tasks",
     "RefreshInterval": "How often to check for new email (in minutes)",
-    "ViewAllTodo":"View the full list"
+    "ViewAllTodo":"View the full list",
+    "HeaderDisplayPropertyLabel": "How should the header be displayed",
+    "uiPropertyGroupName": "Look and Feel"
   }
 });

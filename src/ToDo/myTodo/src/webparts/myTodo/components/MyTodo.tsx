@@ -9,6 +9,7 @@ import { List, Link, Label } from 'office-ui-fabric-react';
 import { IMyTodoState } from './IMyTodoState';
 import { ITaskList, ITasksLists } from './ITaskList';
 import { ITasks, ITask } from './ITasks';
+import { HeaderDisplay} from '../enums';
 import { FontIcon, IIconProps } from 'office-ui-fabric-react/lib/Icon';
 import { IconButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
@@ -99,7 +100,7 @@ export default class MyTodo extends React.Component<IMyTodoProps, IMyTodoState> 
           activeTaskList: defaultTaskList
         });
       }
-      else{
+      else {
         this.setState({
           loading: false
         });
@@ -206,8 +207,8 @@ export default class MyTodo extends React.Component<IMyTodoProps, IMyTodoState> 
       width: 24,
       margin: '2px 5px',
       color: 'blue',
-      float:'left'
-   });
+      float: 'left'
+    });
 
     const iconImportance = mergeStyles({
       fontSize: 24,
@@ -244,10 +245,10 @@ export default class MyTodo extends React.Component<IMyTodoProps, IMyTodoState> 
 
     if (item.dueDateTime) {
       const due = new Date(item.dueDateTime.dateTime);
-      due.setHours(0,0,0,0);
-      
+      due.setHours(0, 0, 0, 0);
+
       const today = new Date();
-      today.setHours(0,0,0,0);      
+      today.setHours(0, 0, 0, 0);
 
       if (due < today) {
         dateDisplay.text = `Overdue, ${due.toLocaleDateString()}`;
@@ -296,7 +297,7 @@ export default class MyTodo extends React.Component<IMyTodoProps, IMyTodoState> 
           disabled={false}
           checked={false}
           data={item.id}
-          onClick={() => this._changeTaskImportance(item.id, item.importance)} />          
+          onClick={() => this._changeTaskImportance(item.id, item.importance)} />
       </div>
     );
   }
@@ -305,9 +306,13 @@ export default class MyTodo extends React.Component<IMyTodoProps, IMyTodoState> 
   public render(): React.ReactElement<IMyTodoProps> {
     return (
       <div className={styles.todo} >
-        <WebPartTitle displayMode={this.props.displayMode}
-          title={this.props.title}
-          updateProperty={this.props.updateProperty} className={styles.title} />
+        {
+          this.props.headerDisplay != HeaderDisplay.None &&
+          <WebPartTitle displayMode={this.props.displayMode}
+            title={this.props.title}
+            className={(this.props.headerDisplay == HeaderDisplay.Standard) ? `${styles.webPartTitle} ${styles.webPartTitleStandard}` : styles.webPartTitle}
+            updateProperty={this.props.updateProperty} className={styles.title} />
+        }
         {
           this.state.loading &&
           <Spinner label={strings.Loading} size={SpinnerSize.large} />
